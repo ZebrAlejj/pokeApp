@@ -30,6 +30,7 @@ export default function PokeCard(props) {
             <hr></hr>
             <Typography variant="body2" component="p">
                 {/* TODO: Types */}
+                
             </Typography>
             </CardContent>
             
