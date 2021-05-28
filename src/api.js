@@ -8,9 +8,10 @@ export const getPokemons = async (offset,limit) => {
     } catch (error) {}
 }
 
-export const getPokemonDetails = async ( urlDetail ) => {
+export const getPokemonDetails = async ( name ) => {
     try {
-        const res = await axios.get(urlDetail);
+        const url = 'https://pokeapi.co/api/v2/pokemon/'
+        const res = await axios.get(`${url}${name}`);
         return res;
     } catch (error) {}
 }

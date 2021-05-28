@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Pagination } from '@material-ui/lab';
+import { Box, Grid } from '@material-ui/core';
 import { getPokemonDetails, getPokemons } from "../api";
 
 import Header from './Header';
 import PokeList from "./PokeList";
 import PokeDeatils from "./PokeDeatils";
-import Styles from "../styles";
+import Styles from "../styles/styles";
+import Pokeball from "../assets/pokeball.gif";
+import About from './About';
+import Footer from './Footer';
+
 
 export default function Body() {
 
@@ -15,6 +20,7 @@ export default function Body() {
     const [pokes, setPokes] = useState([]);
     const [count, setCount] = useState(0);
     const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(true)
     //Number of pokemons per page, aswell the offset
     const limit = 15;
 
@@ -22,12 +28,12 @@ export default function Body() {
         try {
             const data = await getPokemons(offset,limit)
             const promise = data.results.map(async (poke) => {
-                return await getPokemonDetails(poke.url)
+                return await getPokemonDetails(poke.name)
             })
             const results = await Promise.all(promise)
             //Set the number of pages
             setCount(Math.ceil(data.count / limit)) 
-            console.log(data.count / limit);
+            setLoading(false)
             setPokes(results)
         } catch (error) {
             console.log(error);
@@ -36,6 +42,7 @@ export default function Body() {
 
     const handleChange = async (event, value) => {
         try {
+            setLoading(true)
             setPage(value)
             fetchPokes(limit*(value-1),limit)
         } catch (error) {
@@ -44,31 +51,54 @@ export default function Body() {
       };
 
     useEffect(() => {
+        setLoading(true)
         fetchPokes(0,limit)
     }, [])
 
    
     return (
-       <div>
-        <Header></Header>
-        <div className={classes.container}>
-            <Router>
+        <Router>
+            <Header pokes={setPokes} 
+            loading={setLoading}
+            limit={limit}
+            page={setPage}
+            count={setCount}
+            ></Header>
+            <div className={classes.container}>
                 <Route path='/pokedex' >
-                    <h2>Pokedex</h2>
-                    <Pagination 
-                    page={page}
-                    count={count} 
-                    onChange={handleChange}/>
-                    <PokeList pokes={pokes}/>
+                    <Grid container
+                        direction="column"
+                        justify="center"
+                        alignItems="center">
+                        <h2>Pokedex</h2>
+                        {/* Pagination */}
+                        <Pagination 
+                        page={page}
+                        count={count} 
+                        onChange={handleChange}/>
+                        {/* Pokemon List */}
+                        <Box mt={2}>
+                            {loading ? 
+                                (<img src={Pokeball} alt='loading' width="200" />) :
+                                ( <PokeList pokes={pokes}/> )
+                            }
+                            
+                        </Box>                    
+                    </Grid>   
                 </Route>
+                {/* Pokemon Details */}
                 <Route path='/details/:id' >
                     <PokeDeatils/>
                 </Route>
-                <Redirect to='/pokedex' />
-            </Router>
-            {/* TODO: FOOTER */}
-        </div>
-       </div>
-        
+                {/* About */}
+                <Route path='/about' >
+                    <About/>
+                </Route>
+                {/* TODO: FOOTER */}
+                <Footer></Footer>
+            </div>
+
+            <Redirect to='/pokedex' />
+        </Router> 
     )
 }
