@@ -33,7 +33,7 @@ export default function PokeDeatils() {
     return (
         <div>
             {loading ? 
-                <img src={Pokeball} width="200" />
+                <img alt='loading' src={Pokeball} width="200" />
             :
             <Slide in={true} 
                 direction="up"

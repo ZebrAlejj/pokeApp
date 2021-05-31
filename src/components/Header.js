@@ -12,10 +12,11 @@ export default function Header(props) {
 
   const classes = Styles();
   const history = useHistory()
-  const {pokes, loading, count, page, limit} = props
+  const {pokes, loading, count, page, limit, notFound} = props
 
   const searchPoke = async (value,key) => {
       try {
+        // If seacrh value is empty get all pokemons
         if (value === '') {
           const data = await getPokemons(0,limit)
           const promise = data.results.map(async (poke) => {
@@ -27,16 +28,21 @@ export default function Header(props) {
           pokes(results)
           loading(false)
         } else {
+          // When press enter key
           if (key === 'Enter') {
             history.push('/pokedex')
+            // Get pokemon
             const res = await getPokemonDetails(value)
             if ( res !== undefined) {
+              // Pokemon found
               pokes(res.data)
               count(1)
               page(1)
               loading(false)
             } else {
+              // Pokemon not found
               loading(true)
+              notFound(true)
             }
           }
         }
@@ -95,7 +101,6 @@ export default function Header(props) {
                 />
               </div>
             </Grid>
-            
           </Grid>
         </Toolbar>
       </AppBar>

@@ -21,6 +21,7 @@ export default function Body() {
     const [count, setCount] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true)
+    const [notFound, setnotFound] = useState(false)
     //Number of pokemons per page, aswell the offset
     const limit = 15;
 
@@ -32,7 +33,8 @@ export default function Body() {
             })
             const results = await Promise.all(promise)
             //Set the number of pages
-            setCount(Math.ceil(data.count / limit)) 
+            setCount(Math.ceil(data.count / limit))
+            setnotFound(false)
             setLoading(false)
             setPokes(results)
         } catch (error) {
@@ -43,6 +45,7 @@ export default function Body() {
     const handleChange = async (event, value) => {
         try {
             setLoading(true)
+            setnotFound(false)
             setPage(value)
             fetchPokes(limit*(value-1),limit)
         } catch (error) {
@@ -58,12 +61,15 @@ export default function Body() {
    
     return (
         <Router>
+            {/* Header */}
             <Header pokes={setPokes} 
             loading={setLoading}
             limit={limit}
             page={setPage}
             count={setCount}
+            notFound={setnotFound}
             ></Header>
+            {/* Body */}
             <div className={classes.container}>
                 <Route path='/pokedex' >
                     <Grid container
@@ -79,7 +85,11 @@ export default function Body() {
                         {/* Pokemon List */}
                         <Box mt={2}>
                             {loading ? 
-                                (<img src={Pokeball} alt='loading' width="200" />) :
+                                (notFound ? (<h2>Pokemon not found</h2>)
+                                :
+                                (<img src={Pokeball} alt='loading' width="200" />)
+                                ) 
+                                :
                                 ( <PokeList pokes={pokes}/> )
                             }
                             

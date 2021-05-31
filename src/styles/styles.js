@@ -20,7 +20,8 @@ export default makeStyles((theme) => ({
   // Body
   container: {
     margin: 18,
-    textAlign: 'center'
+    textAlign: 'center',
+    paddingBottom: 50
   },
   // Card
   card: {
