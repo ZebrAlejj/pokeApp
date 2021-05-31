@@ -5,7 +5,7 @@ const dark = '#212121'
 
 export default makeStyles((theme) => ({
   primaryColor: {
-    color: red
+    color: `${red} !important`
   },  
   // Deatils
   containerDetails: {
@@ -124,7 +124,8 @@ export default makeStyles((theme) => ({
   footer: {
     position: 'fixed',
     bottom: 0,
+    left: 0,
     width: '100%',
-    backgroundColor: dark
+    backgroundColor: `${dark} !important`
   }
   }));
