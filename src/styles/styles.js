@@ -61,7 +61,7 @@ export default makeStyles((theme) => ({
   },
   menuButton: {
     display: 'none',
-    color: 'white',
+    color: 'white !important',
     [theme.breakpoints.down('sm')]: {
       display: 'block',
     },

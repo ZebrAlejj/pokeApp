@@ -28,7 +28,7 @@ export default function PokeDeatils() {
     useEffect(() => {
         setLoading(true)
         fetchPoke()
-    }, [])
+    })
 
     return (
         <div>
