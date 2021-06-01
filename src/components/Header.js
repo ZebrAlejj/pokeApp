@@ -32,7 +32,7 @@ export default function Header(props) {
           if (key === 'Enter') {
             history.push('/pokedex')
             // Get pokemon
-            const res = await getPokemonDetails(value)
+            const res = await getPokemonDetails(value.toLowerCase())
             if ( res !== undefined) {
               // Pokemon found
               pokes(res.data)

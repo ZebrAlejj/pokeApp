@@ -28,7 +28,7 @@ export default function PokeDeatils() {
     useEffect(() => {
         setLoading(true)
         fetchPoke()
-    },[fetchPoke])
+    },[])
 
     return (
         <div>
@@ -69,8 +69,8 @@ export default function PokeDeatils() {
                         </Grid>
                         <Grid item>
                             <ul className={classes.list}>
-                                <li>📏 Weight: {poke.weight/10} kg</li>
-                                <li>⚖️ Height: {poke.height/10} m</li>
+                                <li>⚖️ Weight: {poke.weight/10} kg</li>
+                                <li>📏 Height: {poke.height/10} m</li>
                             </ul>
                         </Grid>
                         <Grid item>

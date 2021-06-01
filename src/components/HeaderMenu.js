@@ -12,7 +12,7 @@ export default function HeaderMenu() {
     const open = Boolean(anchorEl);
     
     const navigate = (event) => {
-        history.push(event.currentTarget.dataset.value)
+        history.push(`/${event.currentTarget.dataset.value}`)
         setAnchorEl(null)
     }
 
