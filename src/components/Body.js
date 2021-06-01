@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Pagination } from '@material-ui/lab';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, Button } from '@material-ui/core';
+import CachedIcon from '@material-ui/icons/Cached';
 import { getPokemonDetails, getPokemons } from "../api";
 
 import Header from './Header';
@@ -17,9 +18,13 @@ export default function Body() {
 
     const classes = Styles();
 
+    // List of pokemons
     const [pokes, setPokes] = useState([]);
+    // Number of pages
     const [count, setCount] = useState(0);
+    // Current page
     const [page, setPage] = useState(1);
+
     const [loading, setLoading] = useState(true)
     const [notFound, setnotFound] = useState(false)
     //Number of pokemons per page, aswell the offset
@@ -53,11 +58,14 @@ export default function Body() {
         }
       };
 
-    useEffect(() => {
+    const loadPokes = () => {
         setLoading(true)
         fetchPokes(0,limit)
-    }, [])
+    }
 
+    useEffect(() => {
+        loadPokes()
+    }, [])
    
     return (
         <Router>
@@ -73,10 +81,22 @@ export default function Body() {
             <div className={classes.container}>
                 <Route path='/pokedex' >
                     <Grid container
-                        direction="column"
+                        direction="row"
                         justify="center"
                         alignItems="center">
                         <h2>Pokedex</h2>
+                        {/* Button Refresh */}
+                        <Button onClick={loadPokes}
+                            className={classes.refreshButton}
+                            variant="outlined"
+                            spacing={1}>
+                            <CachedIcon></CachedIcon>
+                        </Button>
+                    </Grid>  
+                    <Grid container
+                        direction="column"
+                        justify="center"
+                        alignItems="center">
                         {/* Pagination */}
                         <Pagination 
                         page={page}
@@ -94,7 +114,7 @@ export default function Body() {
                             }
                             
                         </Box>                    
-                    </Grid>   
+                     </Grid>
                 </Route>
                 {/* Pokemon Details */}
                 <Route path='/details/:id' >

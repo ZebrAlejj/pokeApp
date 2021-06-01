@@ -23,6 +23,13 @@ export default makeStyles((theme) => ({
     textAlign: 'center',
     paddingBottom: 50
   },
+  refreshButton: {
+    color: red,
+    padding: 5,
+    border: `solid 1px ${red}`,
+    borderRadius: '5px',
+    marginLeft: 10
+  },
   // Card
   card: {
       color:'white',
