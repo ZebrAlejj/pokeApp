@@ -1,4 +1,4 @@
-[Deployment](https://pokeapp-api-aleajndrojmp.netlify.app/)
+You can check the app here --> [Deployment](https://pokeapp-api-aleajndrojmp.netlify.app/)
 
 
 # Getting Started with Create React App
