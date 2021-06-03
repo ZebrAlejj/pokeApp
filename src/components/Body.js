@@ -59,6 +59,7 @@ export default function Body() {
       };
 
     const loadPokes = () => {
+        setPage(1)
         setLoading(true)
         fetchPokes(0,limit)
     }
